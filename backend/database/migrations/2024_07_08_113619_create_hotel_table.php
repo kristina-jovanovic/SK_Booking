@@ -20,6 +20,7 @@ class CreateHotelTable extends Migration
             $table->string('email')->unique();
             $table->string('restrictions');
             $table->string('facilities');
+            $table->string('description');
             $table->timestamps();
         });
     }
