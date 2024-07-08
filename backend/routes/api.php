@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\HotelController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +25,15 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/users', [UserController::class, 'index']);
 // Route::post('/users', [UserController::class, 'index']);
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/hotels', [HotelController::class, 'index']);
 
+//ovo je samo za ulogovane korisnike
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile', function (Request $request) {
+        return new UserResource(auth()->user());
+    });
+    Route::resource('/hotels', HotelController::class);
+});

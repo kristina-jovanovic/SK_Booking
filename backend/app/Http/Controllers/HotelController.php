@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CityResource;
 use App\Http\Resources\HotelCollection;
 use App\Http\Resources\HotelResource;
+use App\Models\City;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HotelController extends Controller
 {
@@ -38,7 +42,37 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = Auth::user()->role;
+        if ($role === 'user' || $role === 'admin') {
+            return response()->json(['Unauthorized: only owners can add new hotels.'], 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'email' => 'required|string|unique:hotels|email',
+            'restrictions' => 'required|string|in:none,adults only,no pets',
+            'facilities' => 'required',
+            'description' => 'required|string',
+            'photo_url' => 'required|string|url',
+            'city_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $hotel = Hotel::create([
+            'name' => $request->name,
+            'address' => $request->address,
+            'email' => $request->email,
+            'restrictions' => $request->restrictions,
+            'facilities' => serialize($request->facilities),
+            'description' => $request->description,
+            'photo_url' => $request->photo_url,
+            'city_id' =>  $request->city_id
+        ]);
+
+        return response()->json(['Hotel is successfuly added.', new HotelResource($hotel)]);
     }
 
     /**
@@ -72,7 +106,36 @@ class HotelController extends Controller
      */
     public function update(Request $request, Hotel $hotel)
     {
-        //
+        $role = Auth::user()->role;
+        if ($role === 'user' || $role === 'admin') {
+            return response()->json(['Unauthorized: only owners can update hotels.'], 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'email' => 'required|string|unique:hotels|email',
+            'restrictions' => 'required|string|in:none,adults only,no pets',
+            'facilities' => 'required',
+            'description' => 'required|string',
+            'photo_url' => 'required|string|url',
+            'city_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $hotel->name = $request->name;
+        $hotel->address = $request->address;
+        $hotel->email = $request->email;
+        $hotel->restrictions = $request->restrictions;
+        $hotel->facilities = serialize($request->facilities);
+        $hotel->description = $request->description;
+        $hotel->photo_url = $request->photo_url;
+        $hotel->city_id = $request->city_id;
+
+        $hotel->save();
+        return response()->json(['Hotel is successfuly updated.', new HotelResource($hotel)]);
     }
 
     /**
@@ -83,6 +146,11 @@ class HotelController extends Controller
      */
     public function destroy(Hotel $hotel)
     {
-        //
+        $role = Auth::user()->role;
+        if ($role === 'user' || $role === 'admin') {
+            return response()->json(['Unauthorized: only owners can delete hotels.'], 401);
+        }
+        $hotel->delete();
+        return response()->json(['Hotel is successfully deleted.']);
     }
 }
