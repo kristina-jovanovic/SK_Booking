@@ -13,12 +13,12 @@ class AddForeignKeys extends Migration
      */
     public function up()
     {
-        Schema::table('hotel', function (Blueprint $table) {
-            $table->foreignId('city_id')->nullable()->references('id')->on('city')->onDelete('set null');
+        Schema::table('hotels', function (Blueprint $table) {
+            $table->foreignId('city_id')->nullable()->references('id')->on('cities')->onDelete('set null');
         });
-        Schema::table('reservation', function (Blueprint $table) {
+        Schema::table('reservations', function (Blueprint $table) {
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
-            $table->foreignId('hotel_id')->nullable()->references('id')->on('hotel')->onDelete('set null');
+            $table->foreignId('hotel_id')->nullable()->references('id')->on('hotels')->onDelete('set null');
         });
     }
 
@@ -29,10 +29,10 @@ class AddForeignKeys extends Migration
      */
     public function down()
     {
-        Schema::table('hotel', function (Blueprint $table) {
+        Schema::table('hotels', function (Blueprint $table) {
             $table->dropForeign('city_id');
         });
-        Schema::table('reservation', function (Blueprint $table) {
+        Schema::table('reservations', function (Blueprint $table) {
             $table->dropForeign('user_id');
             $table->dropForeign('hotel_id');
         });

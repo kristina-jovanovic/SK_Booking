@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\City;
+use App\Models\Hotel;
+use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +17,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // Reservation::truncate();
+        // Hotel::truncate();
+        // City::truncate();
+        // User::truncate();
+
+        $this->call(UserSeeder::class);
+        $this->call(CitySeeder::class);
+        $this->call(HotelSeeder::class);
+        $this->call(ReservationSeeder::class);
     }
 }

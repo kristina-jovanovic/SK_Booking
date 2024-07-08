@@ -16,6 +16,7 @@ class Hotel extends Model
         'restrictions',
         'facilities',
         'description',
+        'photo_url'
     ];
 
     function city()
