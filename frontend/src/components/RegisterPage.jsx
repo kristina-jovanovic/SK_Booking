@@ -1,36 +1,38 @@
+import axios from 'axios';
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
-function LoginPage({ addToken }) {
-
+function RegisterPage() {
     const [userData, setUserData] = useState({
+        name: '',
         email: '',
-        password: ''
+        password: '',
+        phone_number: '',
+        role: 'user'
     });
+
+
     function handleInput(e) {
         // console.log(e);
         let newUserData = userData;
         newUserData[e.target.name] = e.target.value;
-        // console.log(newUserData);
+        //console.log(newUserData);
         setUserData(newUserData);
     }
 
     let navigate = useNavigate();
-    function handleLogin(e) {
+
+    function handleRegister(e) {
         e.preventDefault();
-        axios.post("/api/login", userData).then(res => {
-            console.log(res.data);
-            if (res.data.success === true) {
-                window.sessionStorage.setItem("auth_token", res.data.access_token);
-                addToken(res.data.access_token);
-                navigate('/');
-            }
-        }).catch((e) => {
-            console.log(e);
+        //pazi znaci moras ceo link jer je drugaciji port 
+        axios.post("/api/register", userData).then((response) => {
+            console.log(response.data);
+            //kad se registruje, prebaci ga na login stranicu
+            navigate("/login");
+        }).catch((error) => {
+            console.log(error);
         });
     }
-
     return (
         <section className="vh-100">
             <div className="container py-5 h-100">
@@ -40,29 +42,32 @@ function LoginPage({ addToken }) {
                             className="img-fluid" alt="Phone image" />
                     </div>
                     <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                        <form onSubmit={handleLogin}>
+                        <form onSubmit={handleRegister}>
+                            <div data-mdb-input-init className="form-outline mb-4">
+                                <input type="name" id="form1Example13" className="form-control form-control-lg"
+                                    placeholder='Enter your name' onInput={(e) => handleInput(e)} name="name" />
+                                <label className="form-label" for="form1Example13">Name</label>
+                            </div>
                             <div data-mdb-input-init className="form-outline mb-4">
                                 <input type="email" id="form1Example13" className="form-control form-control-lg"
                                     placeholder='Enter a valid email address' onInput={(e) => handleInput(e)} name="email" />
                                 <label className="form-label" for="form1Example13">Email address</label>
                             </div>
-
                             <div data-mdb-input-init className="form-outline mb-4">
                                 <input type="password" id="form1Example23" className="form-control form-control-lg"
                                     placeholder='Enter a password' onInput={(e) => handleInput(e)} name="password" />
                                 <label className="form-label" for="form1Example23">Password</label>
                             </div>
-
+                            <div data-mdb-input-init className="form-outline mb-4">
+                                <input type="phone_number" id="form1Example13" className="form-control form-control-lg"
+                                    placeholder='Enter your phone number' onInput={(e) => handleInput(e)} name="phone_number" />
+                                <label className="form-label" for="form1Example13">Phone number</label>
+                            </div>
                             <div className="divider d-flex align-items-center my-4">
                                 <p className="text-center fw-bold mx-3 mb-0 text-muted">
-                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg btn-block">Sign in</button>
+                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg btn-block">Register</button>
 
                                 </p>
-                            </div>
-
-                            <div className="d-flex justify-content-around align-items-center mb-4">
-                                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="api/register" className="link-danger">Register</a></p>
-
                             </div>
 
                         </form>
@@ -73,4 +78,4 @@ function LoginPage({ addToken }) {
     )
 }
 
-export default LoginPage
+export default RegisterPage
