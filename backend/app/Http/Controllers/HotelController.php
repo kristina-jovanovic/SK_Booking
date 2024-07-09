@@ -65,7 +65,7 @@ class HotelController extends Controller
             'name' => $request->name,
             'address' => $request->address,
             'email' => $request->email,
-            'restrictions' => $request->restrictions,
+            'restrictions' => serialize($request->restrictions),
             'facilities' => serialize($request->facilities),
             'description' => $request->description,
             'photo_url' => $request->photo_url,
@@ -128,7 +128,7 @@ class HotelController extends Controller
         $hotel->name = $request->name;
         $hotel->address = $request->address;
         $hotel->email = $request->email;
-        $hotel->restrictions = $request->restrictions;
+        $hotel->restrictions = serialize($request->restrictions);
         $hotel->facilities = serialize($request->facilities);
         $hotel->description = $request->description;
         $hotel->photo_url = $request->photo_url;

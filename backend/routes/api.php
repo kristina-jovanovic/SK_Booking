@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\CityCollection;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,5 +38,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/profile', function (Request $request) {
         return new UserResource(auth()->user());
     });
-    Route::resource('/hotels', HotelController::class);
+    Route::resource('/hotels', HotelController::class)->only('update', 'destroy', 'store');
+    Route::post('/city', [CityController::class, 'store']);
+    Route::resource('users.reservations', ReservationController::class)->only('index');
+    Route::resource('/reservations', ReservationController::class)->only('show', 'update', 'store', 'destroy');
 });

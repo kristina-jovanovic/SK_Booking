@@ -20,7 +20,7 @@ class HotelResource extends JsonResource
             'name' => $this->resource->name,
             'email' => $this->resource->email,
             'adress' => $this->resource->address,
-            'restrictions' => $this->resource->restrictions,
+            'restrictions' => unserialize($this->resource->restrictions),
             'facilities' => unserialize($this->resource->facilities),
             'city' => new CityResource($this->resource->city)
         ];

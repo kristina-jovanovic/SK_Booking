@@ -14,6 +14,8 @@ class Reservation extends Model
         'pansion',
         'numberOfAdults',
         'numberOfChildren',
+        'user_id',
+        'hotel_id'
     ];
 
     function user()

@@ -6,6 +6,8 @@ use App\Http\Resources\CityCollection;
 use App\Http\Resources\CityResource;
 use App\Models\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CityController extends Controller
 {
@@ -38,7 +40,27 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = Auth::user()->role;
+        if ($role === 'user' || $role === 'owner') {
+            return response()->json(['Unauthorized: only admins can add new cities.'], 401);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'zip_code' => 'required',
+            'state' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+        $city = City::create([
+            'name' => $request->name,
+            'zip_code' => $request->zip_code,
+            'state' => $request->state
+        ]);
+
+        return response()->json(['City is successfuly added.', new CityResource($city)]);
     }
 
     /**

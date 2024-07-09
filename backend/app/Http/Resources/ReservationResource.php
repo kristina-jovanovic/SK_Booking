@@ -20,6 +20,7 @@ class ReservationResource extends JsonResource
             'user' => new UserResource($this->resource->user),
             'hotel' => new HotelResource($this->resource->hotel),
             'date' => $this->resource->date,
+            'pansion' => $this->resource->pansion,
             'numberOfAdults' => $this->resource->numberOfAdults,
             'numberOfChildren' => $this->resource->numberOfChildren
         ];

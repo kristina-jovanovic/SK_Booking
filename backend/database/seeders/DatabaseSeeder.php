@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Reservation::truncate();
+        Reservation::truncate();
         // Hotel::truncate();
         // City::truncate();
         // User::truncate();
