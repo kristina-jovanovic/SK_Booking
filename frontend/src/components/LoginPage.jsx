@@ -61,7 +61,7 @@ function LoginPage({ addToken }) {
                             </div>
 
                             <div className="d-flex justify-content-around align-items-center mb-4">
-                                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="api/register" className="link-danger">Register</a></p>
+                                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register" className="link-danger">Register</a></p>
 
                             </div>
 

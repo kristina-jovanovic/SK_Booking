@@ -32,7 +32,7 @@ class HotelSeeder extends Seeder
             'restrictions' => serialize(['no pets']),
             'facilities' => serialize(['parking', 'Wi-Fi', 'gym', 'spa']),
             'description' => 'Robert de Niro, Albert Ajnstajn, Indira Gandi, Lucano Pavaroti, Maksim Gorki i Alfred Hickok samo su neka od svetski poznatih imena  koja su ostavila svoj trajni trag u hotelu Moskva. Po njima je nazvano sest apartmana u hotelu.',
-            'photo_url' => 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/436369773.jpg?k=d6ca1e038cdb9f8b65aa4f09f83cfbe412ec0b9308d7503dfc2009b2ba57cf18&o=&hp=1',
+            'photo_url' => 'https://hotelmoskva.rs/image367.png',
             'city_id' => 1
         ]);
 
@@ -55,7 +55,7 @@ class HotelSeeder extends Seeder
             'restrictions' => serialize(['adults only']),
             'facilities' => serialize(['restaurant', 'breakfast', 'parking', 'Wi-Fi', 'gym', 'spa']),
             'description' => 'Dobro dosli u Novi Sad! Uzivajte u njegovim zivopisnim prizorima i pruzite sebi ugodjaj kakav zasluzujete u samom centru grada.',
-            'photo_url' => 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/399554626.jpg?k=b093af4991a8c37d7d568d1d3062a899cf0e0a1c40fa4029ec0551087c1c062b&o=&hp=1',
+            'photo_url' => 'https://pupinovapalata-nbg.com/wp-content/uploads/2023/01/Pupinova-palata-Novi-Sad-min-1-scaled.jpg',
             'city_id' => 2
         ]);
 
@@ -67,7 +67,7 @@ class HotelSeeder extends Seeder
             'restrictions' => serialize(['no smoking']),
             'facilities' => serialize(['Wi-Fi', 'gym', 'breakfast', 'pets']),
             'description' => 'Staying at Hotel Alpha, you can easily reach the main Parisian high spots as well as the Parc des Princes and Roland Garros stadiums and the Porte de Versailles Exhibition Centre.',
-            'photo_url' => 'https://hapi.mmcreation.com/media/143/Photos/Photos2024/Hotel_Alpha_Paris_Eiffel_chambre_Superieure_6.jpg?w=1216&mode=ratio&coi=50%2C50&hash=21afd90364161b0',
+            'photo_url' => 'https://y.cdrst.com/foto/hotel-sf/1a8b7/granderesp/hotel-alpha-paris-eiffel-by-patrick-hayat-general-121b3009.jpg',
             'city_id' => 6
         ]);
 
@@ -78,7 +78,7 @@ class HotelSeeder extends Seeder
             'restrictions' => serialize(['no smoking', 'adults only']),
             'facilities' => serialize(['Wi-Fi', 'TV', 'parking']),
             'description' => 'Located in Levallois Perret, Hotel Chevallier features a garden and good public transport connection.',
-            'photo_url' => 'https://cf.bstatic.com/xdata/images/hotel/max1280x900/134976406.jpg?k=d320990623e425137b05e0408e82a4f2c4a19108c59e37064cbf961f35fd1dd0&o=&hp=1',
+            'photo_url' => 'https://q-xx.bstatic.com/xdata/images/hotel/max1280x900/555947645.jpg?k=b616ae13ae268dcf244591f34b1037b6a32c710dc98dc3455eb2cddf5831d878&o=',
             'city_id' => 6
         ]);
 
@@ -136,7 +136,7 @@ class HotelSeeder extends Seeder
             'restrictions' => serialize(['no smoking']),
             'facilities' => serialize(['Wi-Fi', 'pets allowed', 'air condition', 'TV', 'parking', 'pool']),
             'description' => 'Casa Montenegro Hotel is a sustainable apartment where guests can make the most of its pool with a view, free bikes, and garden.',
-            'photo_url' => 'https://x.cdrst.com/cdrimg/hotel-sf/302525589/800x600/max-side/bc1198.jpg',
+            'photo_url' => 'https://www.homeinmontenegro.com/wp-content/uploads/2018/11/adriatic-dream-casa-montenegro-5.jpg',
             'city_id' => 3
         ]);
 
@@ -171,7 +171,7 @@ class HotelSeeder extends Seeder
             'restrictions' => serialize(['no pets']),
             'facilities' => serialize(['bar', 'restaurant', 'room service', 'parking', 'spa', 'gym', 'Wi-Fi', 'air condition', 'TV']),
             'description' => 'Ideally located in the prime touristic area of North Male Atoll, Kurumba Maldives promises a relaxing and wonderful visit. ',
-            'photo_url' => 'https://img.tripi.vn/cdn-cgi/image/width=640/https://pix8.agoda.net/hotelImages/121/12153/12153_16070413510044381237.png?ca=6&ce=1',
+            'photo_url' => 'https://www.hotelscombined.com/rimg/kimg/ad/14/3c1407a9cee9c9ae.jpg?width=1200&height=630&crop=true',
             'city_id' => 7
         ]);
     }

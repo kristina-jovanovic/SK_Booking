@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React from 'react'
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
-function NavBar({ token }) {
+function NavBar({ token, addToken }) {
+    let navigate = useNavigate();
+
     function handleLogout() {
         let config = {
             method: 'post',
@@ -17,18 +19,25 @@ function NavBar({ token }) {
             .then((response) => {
                 console.log(JSON.stringify(response.data));
                 window.sessionStorage.setItem("auth_token", null);
+                addToken(null);
             })
             .catch((error) => {
                 console.log(error);
             });
+        navigate('/');
     }
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light"
+            // style={{
+            //     backgroundColor: 'linear-gradient(to right, #004e85 0%, #c9f9fa 100%)'
+            //     // position: 'fixed' 
+            // }}
+            >
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="/">
+                    <Link className="navbar-brand" to="/">
                         SK Booking
-                    </a>
+                    </Link>
                     <button
                         className="navbar-toggler"
                         type="button"
@@ -45,15 +54,15 @@ function NavBar({ token }) {
                         id="navbarNavAltMarkup"
                     >
                         <div className="navbar-nav">
-                            <a className="nav-link active" aria-current="page" href="/hotels">
+                            <Link className="nav-link active" aria-current="page" to="/hotels">
                                 Hoteli
-                            </a>
+                            </Link>
                             {/* dva jednako pokrivaju i null i not defined, a tri jednako bi pokrivalo samo null */}
-                            {token == null ? (<a className="nav-link active" aria-current="page" href="/login">
+                            {token == null ? (<Link className="nav-link active" aria-current="page" to="/login">
                                 Login
-                            </a>) : (<a className="nav-link active" aria-current="page" href="/" onClick={handleLogout}>
+                            </Link>) : (<Link className="nav-link active" aria-current="page" to="/" onClick={handleLogout}>
                                 Logout
-                            </a>)}
+                            </Link>)}
                         </div>
                     </div>
                 </div>
