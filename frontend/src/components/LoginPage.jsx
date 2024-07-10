@@ -1,8 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
-function LoginPage({ addToken }) {
+function LoginPage({ addToken, token, addUser }) {
+    let navigate = useNavigate();
+
+    useEffect(() => {
+        if (token != null) {
+            navigate('/');
+        }
+    })
 
     const [userData, setUserData] = useState({
         email: '',
@@ -16,7 +23,6 @@ function LoginPage({ addToken }) {
         setUserData(newUserData);
     }
 
-    let navigate = useNavigate();
     function handleLogin(e) {
         e.preventDefault();
         axios.post("/api/login", userData).then(res => {
@@ -24,11 +30,28 @@ function LoginPage({ addToken }) {
             if (res.data.success === true) {
                 window.sessionStorage.setItem("auth_token", res.data.access_token);
                 addToken(res.data.access_token);
-                navigate('/');
+                // navigate('/');
             }
         }).catch((e) => {
             console.log(e);
         });
+        // let config = {
+        //     method: 'get',
+        //     maxBodyLength: Infinity,
+        //     url: 'api/profile',
+        //     headers: {
+        //         'Authorization': 'Bearer ' + token
+        //     }
+        // };
+
+        // axios.request(config)
+        //     .then((response) => {
+        //         addUser(response.data);
+        //         console.log(response.data);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
     }
 
     return (

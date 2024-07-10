@@ -1,8 +1,15 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-function RegisterPage() {
+function RegisterPage({ token, addUser }) {
+    let navigate = useNavigate();
+
+    useEffect(() => {
+        if (token != null) {
+            navigate('/');
+        }
+    })
     const [userData, setUserData] = useState({
         name: '',
         email: '',
@@ -20,7 +27,6 @@ function RegisterPage() {
         setUserData(newUserData);
     }
 
-    let navigate = useNavigate();
 
     function handleRegister(e) {
         e.preventDefault();

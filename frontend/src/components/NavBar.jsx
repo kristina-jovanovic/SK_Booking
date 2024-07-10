@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
-function NavBar({ token, addToken }) {
+function NavBar({ token, addToken, addUser}) {
     let navigate = useNavigate();
 
     function handleLogout() {
