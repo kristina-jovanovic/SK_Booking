@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react'
+import { Button, Modal } from 'react-bootstrap';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 function NavBar({ token, addToken, addUser, user }) {
@@ -27,6 +28,10 @@ function NavBar({ token, addToken, addUser, user }) {
             });
         navigate('/');
     }
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light"
@@ -65,13 +70,31 @@ function NavBar({ token, addToken, addUser, user }) {
                             {/* dva jednako pokrivaju i null i not defined, a tri jednako bi pokrivalo samo null */}
                             {token == null ? (<Link className="nav-link active" aria-current="page" to="/login">
                                 Login
-                            </Link>) : (<Link className="nav-link active" aria-current="page" to="/" onClick={handleLogout}>
+                            </Link>) : (<Link className="nav-link active" aria-current="page" to="/" onClick={handleShow}>
                                 Logout
                             </Link>)}
                         </div>
                     </div>
                 </div>
             </nav>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Odjavljivanje</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Da li ste sigurni da želite da se odjavite?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Nazad
+                    </Button>
+                    <Button variant="primary" onClick={() => {
+                        handleClose();
+                        handleLogout();
+                    }}>
+                        Odjavi se
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
             <Outlet />
         </div>
     )

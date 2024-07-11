@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import ReservationCard from './ReservationCard';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { Button, Modal } from 'react-bootstrap';
 
 function ReservationPage({ user, token }) {
+    let navigate = useNavigate();
+
+    const [show, setShow] = useState(true);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const [reservations, setReservations] = useState();
     useEffect(() => {
         let config = {
@@ -28,6 +35,7 @@ function ReservationPage({ user, token }) {
                 });
 
         }
+        // console.log(reservations);
     }, [reservations]);
     return (
         <div //className="bg-image"
@@ -48,9 +56,22 @@ function ReservationPage({ user, token }) {
                 }}>
                 {/* <HotelCard />
                 <HotelCard /> */}
-                {reservations == null ? <></> : reservations.map((res) => (
-                    <ReservationCard reservation={res} key={res.id} />
-                ))}
+                {reservations == null ? (<></>) : (reservations.length === 0 ? (<><Modal show={show} onHide={handleClose}>
+                    <Modal.Header >
+                        <Modal.Title>Nemate zakazanih rezervacija</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => {
+                            handleClose();
+                            navigate('/');
+                        }}>
+                            OK
+                        </Button>
+                    </Modal.Footer>
+                </Modal></>) : (reservations.map((res) => (
+                    <ReservationCard reservation={res} key={res.id} token={token} user={user} />
+                ))))}
+                { }
 
             </div>
         </div>

@@ -41,6 +41,7 @@ function App() {
           {/* <Route path='hotels/:id' element={<HotelDetails />} /> ovo ce trebati za unos, update i brisanje hotela */}
           <Route path='/users/:id/reservations' element={<ReservationPage user={user} token={token} />} />
           <Route path='/reservations' element={<ReservationForm user={user} hotel={hotel} token={token} />} />
+          
 
         </Route>
       </Routes>

@@ -29,12 +29,18 @@ function RegisterPage({ token }) {
 
 
     function handleRegister(e) {
+
         e.preventDefault();
-        //pazi znaci moras ceo link jer je drugaciji port 
+        if (userData.name === '' || userData.email === '' || userData.password === '' || userData.phone_number === '') {
+            alert('Sva polja su obavezna!');
+            return;
+        }
         axios.post("/api/register", userData).then((response) => {
             console.log(response.data);
+
             //kad se registruje, prebaci ga na login stranicu
-            navigate("/login");
+            // alert('Registracija uspešna');
+            // navigate("/login");
         }).catch((error) => {
             console.log(error);
         });
@@ -51,27 +57,27 @@ function RegisterPage({ token }) {
                         <form onSubmit={handleRegister}>
                             <div data-mdb-input-init className="form-outline mb-4">
                                 <input type="name" id="form1Example13" className="form-control form-control-lg"
-                                    placeholder='Enter your name' onInput={(e) => handleInput(e)} name="name" />
-                                <label className="form-label" for="form1Example13">Name</label>
+                                    placeholder='Unesi ime i prezime' onInput={(e) => handleInput(e)} name="name" />
+                                <label className="form-label" for="form1Example13">Ime i prezime</label>
                             </div>
                             <div data-mdb-input-init className="form-outline mb-4">
                                 <input type="email" id="form1Example13" className="form-control form-control-lg"
-                                    placeholder='Enter a valid email address' onInput={(e) => handleInput(e)} name="email" />
-                                <label className="form-label" for="form1Example13">Email address</label>
+                                    placeholder='Unesi email adresu' onInput={(e) => handleInput(e)} name="email" />
+                                <label className="form-label" for="form1Example13">Email adresa</label>
                             </div>
                             <div data-mdb-input-init className="form-outline mb-4">
                                 <input type="password" id="form1Example23" className="form-control form-control-lg"
-                                    placeholder='Enter a password' onInput={(e) => handleInput(e)} name="password" />
-                                <label className="form-label" for="form1Example23">Password</label>
+                                    placeholder='Unesi lozinku' onInput={(e) => handleInput(e)} name="password" />
+                                <label className="form-label" for="form1Example23">Lozinka</label>
                             </div>
                             <div data-mdb-input-init className="form-outline mb-4">
                                 <input type="phone_number" id="form1Example13" className="form-control form-control-lg"
-                                    placeholder='Enter your phone number' onInput={(e) => handleInput(e)} name="phone_number" />
-                                <label className="form-label" for="form1Example13">Phone number</label>
+                                    placeholder='Unesi broj telefona' onInput={(e) => handleInput(e)} name="phone_number" />
+                                <label className="form-label" for="form1Example13">Broj telefona</label>
                             </div>
                             <div className="divider d-flex align-items-center my-4">
                                 <p className="text-center fw-bold mx-3 mb-0 text-muted">
-                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg btn-block">Register</button>
+                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg btn-block">Registruj se</button>
 
                                 </p>
                             </div>

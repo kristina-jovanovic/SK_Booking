@@ -52,23 +52,16 @@ function ReservationForm({ user, hotel, token }) {
             headers: {
                 'Authorization': 'Bearer ' + token
             },
-            // body: {
-            //     'date': formattedDate,
-            //     'pansion': reservationData.pansion,
-            //     'numberOfAdults': parseInt(reservationData.numberOfAdults, 10),
-            //     'numberOfChildren': parseInt(reservationData.numberOfChildren, 10),
-            //     'numberOfNights': parseInt(reservationData.numberOfNights, 10),
-            //     'user_id': reservationData.user_id,
-            //     'hotel_id': reservationData.hotel_id
-            // }
         };
 
         axios.request(config)
             .then((response) => {
-                console.log('uspesno sacuvano', response);
+                // console.log('uspesno sacuvano', response);
+                alert("Rezervacija uspešna!");
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
+                alert(error);
             });
 
 

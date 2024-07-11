@@ -25,6 +25,10 @@ function LoginPage({ addToken, token, addUser }) {
 
     function handleLogin(e) {
         e.preventDefault();
+        if (userData.email === '' || userData.password === '') {
+            alert('Sva polja su obavezna!');
+            return;
+        }
         axios.post("/api/login", userData).then(res => {
             console.log(res.data);
             if (res.data.success === true) {
@@ -32,6 +36,9 @@ function LoginPage({ addToken, token, addUser }) {
                 addToken(res.data.access_token);
                 addUser(res.data.user);
                 navigate('/');
+            }
+            else {
+                alert('Pogresni kredencijali');
             }
         }).catch((e) => {
             console.log(e);
@@ -51,25 +58,25 @@ function LoginPage({ addToken, token, addUser }) {
                         <form onSubmit={handleLogin}>
                             <div data-mdb-input-init className="form-outline mb-4">
                                 <input type="email" id="form1Example13" className="form-control form-control-lg"
-                                    placeholder='Enter a valid email address' onInput={(e) => handleInput(e)} name="email" />
-                                <label className="form-label" for="form1Example13">Email address</label>
+                                    placeholder='Unesi email adresu' onInput={(e) => handleInput(e)} name="email" />
+                                <label className="form-label" for="form1Example13">Email adresa</label>
                             </div>
 
                             <div data-mdb-input-init className="form-outline mb-4">
                                 <input type="password" id="form1Example23" className="form-control form-control-lg"
-                                    placeholder='Enter a password' onInput={(e) => handleInput(e)} name="password" />
-                                <label className="form-label" for="form1Example23">Password</label>
+                                    placeholder='Unesi lozinku' onInput={(e) => handleInput(e)} name="password" />
+                                <label className="form-label" for="form1Example23">Lozinka</label>
                             </div>
 
                             <div className="divider d-flex align-items-center my-4">
                                 <p className="text-center fw-bold mx-3 mb-0 text-muted">
-                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg btn-block">Sign in</button>
+                                    <button type="submit" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg btn-block">Prijavi se</button>
 
                                 </p>
                             </div>
 
                             <div className="d-flex justify-content-around align-items-center mb-4">
-                                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/register" className="link-danger">Register</a></p>
+                                <p class="small fw-bold mt-2 pt-1 mb-0">Nemaš nalog? <a href="/register" className="link-danger">Registruj se</a></p>
 
                             </div>
 
