@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import HotelCard from './HotelCard'
 import axios from 'axios';
 
-function HotelsPage() {
+function HotelsPage({ addHotel, user }) {
     const [hotels, setHotels] = useState();
     useEffect(() => {
         if (hotels == null) {
@@ -34,7 +34,7 @@ function HotelsPage() {
                 {/* <HotelCard />
                 <HotelCard /> */}
                 {hotels == null ? <></> : hotels.map((hotel) => (
-                    <HotelCard hotel={hotel} key={hotel.id} />
+                    <HotelCard hotel={hotel} key={hotel.id} addHotel={addHotel} user={user} />
                 ))}
 
             </div>

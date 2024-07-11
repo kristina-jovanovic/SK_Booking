@@ -30,28 +30,13 @@ function LoginPage({ addToken, token, addUser }) {
             if (res.data.success === true) {
                 window.sessionStorage.setItem("auth_token", res.data.access_token);
                 addToken(res.data.access_token);
-                // navigate('/');
+                addUser(res.data.user);
+                navigate('/');
             }
         }).catch((e) => {
             console.log(e);
         });
-        // let config = {
-        //     method: 'get',
-        //     maxBodyLength: Infinity,
-        //     url: 'api/profile',
-        //     headers: {
-        //         'Authorization': 'Bearer ' + token
-        //     }
-        // };
 
-        // axios.request(config)
-        //     .then((response) => {
-        //         addUser(response.data);
-        //         console.log(response.data);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //     });
     }
 
     return (

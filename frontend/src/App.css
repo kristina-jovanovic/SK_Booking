@@ -90,3 +90,13 @@
 div {
   font-family: 'Poppins', sans-serif;
 }
+
+.ctn img {
+  height: 100%;
+  width: 100%;
+}
+
+.ctn img {
+  /* object-fit: contain; */
+  object-fit: cover;
+}

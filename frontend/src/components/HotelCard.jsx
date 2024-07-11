@@ -2,11 +2,20 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
-function HotelCard({ hotel }) {
+function HotelCard({ hotel, addHotel, user }) {
     let navigate = useNavigate();
-    function showDetails() {
+    function reserve() {
         // navigate(`/hotels/id=${hotel.id}`)
-        navigate('/reservations')
+
+        if (user == null) {
+            //mora prvo da se prijavi ako nije prijavljen
+            navigate('/login');
+        }
+        else{
+            addHotel(hotel);
+            navigate('/reservations');
+        }
+
     }
     return (
         <div className="card mb-3">
@@ -17,7 +26,7 @@ function HotelCard({ hotel }) {
                         //maxWidth: '200px' 
                     }} />
                 <div className='middle'>
-                    <button type="button" className="btn btn-outline-info" onClick={showDetails}>Rezerviši</button>
+                    <button type="button" className="btn btn-outline-info" onClick={reserve}>Rezerviši</button>
                 </div>
             </div>
             <div className="card-body">

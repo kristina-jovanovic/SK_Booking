@@ -19,6 +19,7 @@ class CreateReservationTable extends Migration
             $table->enum('pansion', ['room only', 'breakfast', 'half board', 'all inclusive']);
             $table->integer('numberOfAdults');
             $table->integer('numberOfChildren');
+            $table->integer('numberOfNights');
             $table->timestamps();
         });
     }

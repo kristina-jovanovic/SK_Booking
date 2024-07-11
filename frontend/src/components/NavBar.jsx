@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
-function NavBar({ token, addToken, addUser}) {
+function NavBar({ token, addToken, addUser, user }) {
     let navigate = useNavigate();
 
     function handleLogout() {
@@ -20,6 +20,7 @@ function NavBar({ token, addToken, addUser}) {
                 console.log(JSON.stringify(response.data));
                 window.sessionStorage.setItem("auth_token", null);
                 addToken(null);
+                addUser(null);
             })
             .catch((error) => {
                 console.log(error);
@@ -30,8 +31,8 @@ function NavBar({ token, addToken, addUser}) {
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light"
             // style={{
-            //     backgroundColor: 'linear-gradient(to right, #004e85 0%, #c9f9fa 100%)'
-            //     // position: 'fixed' 
+            //     backgroundColor: 'linear-gradient(to right, #004e85 0%, #c9f9fa 100%)',
+            //     position: 'fixed' 
             // }}
             >
                 <div className="container-fluid">
@@ -57,6 +58,10 @@ function NavBar({ token, addToken, addUser}) {
                             <Link className="nav-link active" aria-current="page" to="/hotels">
                                 Hoteli
                             </Link>
+                            {/* {user === null ? (<></>) : (
+                                user.role === 'user' ? (<Link className="nav-link active" aria-current="page" to='/'>Rezervacije</Link>) : (<></>)
+                            )} */}
+                            {user?.role === 'user' ? (<Link className="nav-link active" aria-current="page" to={{ pathname: `users/${user.id}/reservations` }}>Rezervacije</Link>) : (<></>)}
                             {/* dva jednako pokrivaju i null i not defined, a tri jednako bi pokrivalo samo null */}
                             {token == null ? (<Link className="nav-link active" aria-current="page" to="/login">
                                 Login

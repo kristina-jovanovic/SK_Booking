@@ -20,6 +20,7 @@ class ReservationFactory extends Factory
             'pansion' => $this->faker->randomElement(['room only', 'breakfast', 'half board', 'all inclusive']),
             'numberOfAdults' => rand(1, 4),
             'numberOfChildren' => rand(0, 4),
+            'numberOfNights' => rand(0, 15),
             'user_id' => User::factory(),
             'hotel_id' => Hotel::factory(),
         ];

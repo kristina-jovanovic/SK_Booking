@@ -14,6 +14,7 @@ class Reservation extends Model
         'pansion',
         'numberOfAdults',
         'numberOfChildren',
+        'numberOfNights',
         'user_id',
         'hotel_id'
     ];

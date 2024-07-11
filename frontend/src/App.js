@@ -9,6 +9,7 @@ import HotelCard from './components/HotelCard';
 import HotelDetails from './components/HotelDetails';
 import Home from './components/Home';
 import ReservationPage from './components/ReservationPage';
+import ReservationForm from './components/ReservationForm';
 
 function App() {
 
@@ -20,6 +21,10 @@ function App() {
   function addUser(user) {
     setUser(user);
   }
+  const [hotel, setHotel] = useState();
+  function addHotel(hotel) {
+    setHotel(hotel);
+  }
 
   return (
     <BrowserRouter className="App">
@@ -30,11 +35,12 @@ function App() {
         <Route path='/register' element={<RegisterPage token={token} addUser={addUser} />} />
       </Routes>
       <Routes>
-        <Route path='/' element={<NavBar token={token} addToken={addToken} addUser={addUser} />} >
-          <Route path='hotels' element={<HotelsPage />} />
+        <Route path='/' element={<NavBar token={token} addToken={addToken} addUser={addUser} user={user} />} >
+          <Route path='hotels' element={<HotelsPage addHotel={addHotel} user={user} />} />
           <Route path='/' element={<Home />} />
           {/* <Route path='hotels/:id' element={<HotelDetails />} /> ovo ce trebati za unos, update i brisanje hotela */}
-          <Route path='/reservations' element={<ReservationPage />} />
+          <Route path='/users/:id/reservations' element={<ReservationPage user={user} token={token} />} />
+          <Route path='/reservations' element={<ReservationForm user={user} hotel={hotel} token={token} />} />
 
         </Route>
       </Routes>

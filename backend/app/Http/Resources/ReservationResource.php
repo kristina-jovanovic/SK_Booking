@@ -22,7 +22,8 @@ class ReservationResource extends JsonResource
             'date' => $this->resource->date,
             'pansion' => $this->resource->pansion,
             'numberOfAdults' => $this->resource->numberOfAdults,
-            'numberOfChildren' => $this->resource->numberOfChildren
+            'numberOfChildren' => $this->resource->numberOfChildren,
+            'numberOfNights' => $this->resource->numberOfNights
         ];
     }
 }

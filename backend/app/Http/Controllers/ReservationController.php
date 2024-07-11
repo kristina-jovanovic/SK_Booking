@@ -67,6 +67,7 @@ class ReservationController extends Controller
             'pansion' => 'required|in:room only,breakfast,half board,all inclusive',
             'numberOfAdults' => 'required',
             'numberOfChildren' => 'required',
+            'numberOfNights' => 'required',
             'hotel_id' => 'required',
         ]);
 
@@ -78,6 +79,7 @@ class ReservationController extends Controller
             'pansion' => $request->pansion,
             'numberOfAdults' => $request->numberOfAdults,
             'numberOfChildren' => $request->numberOfChildren,
+            'numberOfNights' => $request->numberOfNights,
             'hotel_id' => $request->hotel_id,
             'user_id' => Auth::user()->id
         ]);
@@ -136,6 +138,7 @@ class ReservationController extends Controller
             'pansion' => 'required|in:room only,breakfast,half board,all inclusive',
             'numberOfAdults' => 'required',
             'numberOfChildren' => 'required',
+            'numberOfNights' => 'required',
             // 'hotel_id' => 'required',
         ]);
 
@@ -149,6 +152,7 @@ class ReservationController extends Controller
         $reservation->pansion = $request->pansion;
         $reservation->numberOfAdults = $request->numberOfAdults;
         $reservation->numberOfChildren = $request->numberOfChildren;
+        $reservation->numberOfNights = $request->numberOfNights;
 
         $reservation->save();
 
