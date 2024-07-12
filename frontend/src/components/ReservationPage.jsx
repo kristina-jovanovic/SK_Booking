@@ -3,15 +3,18 @@ import ReservationCard from './ReservationCard';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
+import Loader from './Loader';
 
 function ReservationPage({ user, token }) {
     let navigate = useNavigate();
 
+    const [loading, setLoading] = useState(true);
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [reservations, setReservations] = useState();
     useEffect(() => {
+        setLoading(true);
         let config = {
             method: 'get',
             maxBodyLength: Infinity,
@@ -22,10 +25,6 @@ function ReservationPage({ user, token }) {
         };
 
         if (reservations == null) {
-            // axios.get(`/users/${user.id}/reservations`).then((res => {
-            //     // console.log(res);
-            //     setReservations(res.data.reservations);
-            // }))
             axios.request(config)
                 .then((response) => {
                     setReservations(response.data.reservations);
@@ -36,6 +35,7 @@ function ReservationPage({ user, token }) {
 
         }
         // console.log(reservations);
+        setLoading(false);
     }, [reservations]);
     return (
         <div //className="bg-image"
@@ -45,35 +45,40 @@ function ReservationPage({ user, token }) {
                 //paddingTop:'10vh'
                 backgroundColor: '#eaf3fa'
             }}>
-            <div //className="border d-flex align-items-center justify-content-center" 
-                style={{
-                    // height: "100vh",
-                    backgroundColor: 'transparent',
-                    marginLeft: '25%',
-                    marginRight: '25%',
-                    // paddingTop: '30%',
-                    flexDirection: 'column'
-                }}>
-                {/* <HotelCard />
-                <HotelCard /> */}
-                {reservations == null ? (<></>) : (reservations.length === 0 ? (<><Modal show={show} onHide={handleClose}>
-                    <Modal.Header >
-                        <Modal.Title>Nemate zakazanih rezervacija</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Footer>
-                        <Button variant="primary" onClick={() => {
-                            handleClose();
-                            navigate('/');
-                        }}>
-                            OK
-                        </Button>
-                    </Modal.Footer>
-                </Modal></>) : (reservations.map((res) => (
-                    <ReservationCard reservation={res} key={res.id} token={token} user={user} />
-                ))))}
-                { }
+            {loading ? (
+                <div className='d-flex justify-content-center align-items-center' style={{ width: "100%" }}>
+                    <Loader marginT="20%"></Loader>
+                </div>
+            ) : (
+                <div //className="border d-flex align-items-center justify-content-center" 
+                    style={{
+                        // height: "100vh",
+                        backgroundColor: 'transparent',
+                        marginLeft: '25%',
+                        marginRight: '25%',
+                        // paddingTop: '30%',
+                        flexDirection: 'column'
+                    }}>
+                    {reservations == null ? (<></>) : (reservations.length === 0 ? (<><Modal show={show} onHide={handleClose}>
+                        <Modal.Header >
+                            <Modal.Title>Nemate zakazanih rezervacija</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={() => {
+                                handleClose();
+                                navigate('/');
+                            }}>
+                                OK
+                            </Button>
+                        </Modal.Footer>
+                    </Modal></>) : (reservations.map((res) => (
+                        <ReservationCard reservation={res} key={res.id} token={token} user={user} />
+                    ))))}
 
-            </div>
+                </div>
+
+            )}
+
         </div>
     )
 }

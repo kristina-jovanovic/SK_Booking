@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Loader from './Loader';
 
 function Home() {
     let navigate = useNavigate();
     const [quote, setQuote] = useState();
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
+        setLoading(true);
         if (quote == null) {
             axios.defaults.baseURL = "";
 
@@ -29,6 +32,10 @@ function Home() {
                 });
             axios.defaults.baseURL = "http://127.0.0.1:8000/";
         }
+        else {
+
+            setLoading(false);
+        }
     }, [quote]);
     return (
         // <!-- Background image -->
@@ -42,12 +49,19 @@ function Home() {
                 backgroundSize: 'cover'
             }}
         >
-            <div className='d-flex justify-content-center align-items-center'
-                style={{ flexDirection: 'column' }}>
-                <h1 className="text-white" >Dobro došli na SK Booking!</h1>
-                {quote == null ? (<></>) : (<p className="text-white" style={{ textAlign: 'center' }}> {quote.quote} -{quote.author}</p>)}
-                <button type="button" className="btn btn-outline-info" onClick={() => (navigate('/hotels'))}>Pogledaj ponudu hotela</button>
-            </div>
+            {loading ? (
+                <div className='d-flex justify-content-center align-items-center' style={{ width: "100%" }}>
+                    <Loader marginT="100px"></Loader>
+                </div>
+            ) : (
+
+                <div className='d-flex justify-content-center align-items-center'
+                    style={{ flexDirection: 'column' }}>
+                    <h1 className="text-white" >Dobro došli na SK Booking!</h1>
+                    {quote == null ? (<></>) : (<p className="text-white" style={{ textAlign: 'center' }}> {quote.quote} -{quote.author}</p>)}
+                    <button type="button" className="btn btn-outline-info" onClick={() => (navigate('/hotels'))}>Pogledaj ponudu hotela</button>
+                </div>
+            )}
         </div>
         // <!-- Background image -->
     )
