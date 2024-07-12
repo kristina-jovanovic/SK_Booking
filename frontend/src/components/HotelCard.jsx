@@ -11,7 +11,7 @@ function HotelCard({ hotel, addHotel, user }) {
             //mora prvo da se prijavi ako nije prijavljen
             navigate('/login');
         }
-        else{
+        else {
             addHotel(hotel);
             navigate('/reservations');
         }
@@ -19,7 +19,7 @@ function HotelCard({ hotel, addHotel, user }) {
     }
     return (
         <div className="card mb-3">
-            <div className='container'>
+            <div className='container' style={{ paddingLeft: 0, paddingRight: 0 }}>
                 <img src={hotel.photo_url} className="card-img-top image" alt="hotel image"
                     style={{
                         maxHeight: '400px',

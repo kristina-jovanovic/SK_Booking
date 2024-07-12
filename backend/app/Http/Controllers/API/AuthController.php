@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -43,14 +44,18 @@ class AuthController extends Controller
         }
         $user = User::where('email', $request['email'])->firstOrFail();
 
+        DB::table('personal_access_tokens')->where('tokenable_id', $user->id)->delete();
+
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json(['success' => true, 'access_token' => $token, 'token_type' => 'Bearer', 'user' => $user]);
     }
 
     function logout()
     {
+        $user = User::find(auth()->id());
+        DB::table('personal_access_tokens')->where('tokenable_id', auth()->id())->delete();
         //ovde podvlaci kao gresku ali zapravo radi, bag je u pitanju
-        auth()->user()->tokens()->delete();
+        // auth()->user()->tokens()->delete();
         return [
             'message' => 'You have successfully logged out and the token was successfully deleted.'
         ];

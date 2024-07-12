@@ -40,7 +40,7 @@ function RegisterPage({ token }) {
 
             //kad se registruje, prebaci ga na login stranicu
             // alert('Registracija uspešna');
-            // navigate("/login");
+            navigate("/login");
         }).catch((error) => {
             console.log(error);
         });

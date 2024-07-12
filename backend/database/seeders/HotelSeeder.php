@@ -27,7 +27,7 @@ class HotelSeeder extends Seeder
         // Beograd
         Hotel::create([
             'name' => 'Hotel Moskva',
-            'address' => 'Balkanska 1',
+            'address' => 'Terazije 20',
             'email' => 'info@hotelmoskva.rs',
             'restrictions' => serialize(['no pets']),
             'facilities' => serialize(['parking', 'Wi-Fi', 'gym', 'spa']),

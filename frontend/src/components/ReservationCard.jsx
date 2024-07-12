@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
+import Map from './Map';
 // import Modal from 'react-bootstrap/Modal';
 
 function ReservationCard({ reservation, token, user }) {
@@ -68,11 +69,10 @@ function ReservationCard({ reservation, token, user }) {
                                 <button type="button" className="btn btn-outline-info p-2 ms-auto" style={{ marginRight: '5%' }} onClick={handleShow}>Obriši</button>
                             </div>
                         </p>
-                        {/* <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2832.3970177635297!2d20.47284641553438!3d44.77271077909886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475a705762332ab5%3A0x422a527f1ff25cac!2z0IjQvtCy0LUg0JjQu9C40ZvQsCAxNTQsINCR0LXQvtCz0YDQsNC0IDExMDAw!5e0!3m2!1ssr!2srs!4v1641907422919!5m2!1ssr!2srs"
-                            width="100%" height="80%" style={{ border: 0 }} allowfullscreen="" loading="lazy" ></iframe> */}
+                        <Map address={reservation.hotel.address
+                            //  + ',' + reservation.hotel.city.name
+                             } />
 
-                        {/* <iframe width="100%" height="300px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src={{ url: `https://maps.google.com/maps?width=100%25&amp;height=80%25&amp;hl=en&amp;q=Balkanska%201,%20Beograd,%20Srbija+(Hotel%20Moskva)&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed`}}><a href="https://www.gps.ie/">gps trackers</a></iframe> */}
                     </div>
                 </div>
                 <Modal show={show} onHide={handleClose}>

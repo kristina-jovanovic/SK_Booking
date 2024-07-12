@@ -27,6 +27,12 @@ function ReservationForm({ user, hotel, token }) {
         setReservationData(newResData);
     }
     function rezervisi() {
+
+        if (reservationData.date === '' || reservationData.pansion === '') {
+            alert('Sva polja su obavezna!');
+            return;
+        }
+
         //post zahtev, dodajemo red u tabelu rezervations u bazi
 
         // const start_date = new Date(reservationData.date);
