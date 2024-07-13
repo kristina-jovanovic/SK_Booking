@@ -24,12 +24,12 @@ function HotelsPage({ addHotel, user }) {
         <div //className="bg-image"
             style={{
                 // backgroundImage: 'url(https://img.freepik.com/free-vector/world-tourism-day-labels-collection_23-2149052388.jpg?ga=GA1.1.917910491.1706989513&semt=ais_hybrid)',
-                height: '100vh',
+                // height: '100vh',
                 //paddingTop:'10vh'
                 backgroundColor: '#eaf3fa'
             }}>
             {loading ? (
-                <div className='d-flex justify-content-center align-items-center' style={{ width: "100%" }}>
+                <div className='d-flex justify-content-center align-items-center' style={{ width: "100%", height: '80vh' }}>
                     <Loader marginT="20%"></Loader>
                 </div>
             ) : (

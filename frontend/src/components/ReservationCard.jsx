@@ -40,7 +40,7 @@ function ReservationCard({ reservation, token, user }) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     return (
-        <div className="card mb-3" style={{ maxWidth: "540px;" }}>
+        <div className="card mb-3" style={{ maxWidth: "540px;", marginTop: '0.3rem' }}>
             <div className="row g-0">
                 <div className="col-md-4 ctn">
                     <img
@@ -71,7 +71,7 @@ function ReservationCard({ reservation, token, user }) {
                         </p>
                         <Map address={reservation.hotel.address
                             //  + ',' + reservation.hotel.city.name
-                             } />
+                        } />
 
                     </div>
                 </div>

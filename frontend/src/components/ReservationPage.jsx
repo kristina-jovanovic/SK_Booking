@@ -9,6 +9,7 @@ function ReservationPage({ user, token }) {
     let navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
+    console.log(loading);
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -34,8 +35,10 @@ function ReservationPage({ user, token }) {
                 });
 
         }
+        else {
+            setLoading(false);
+        }
         // console.log(reservations);
-        setLoading(false);
     }, [reservations]);
     return (
         <div //className="bg-image"
@@ -46,7 +49,7 @@ function ReservationPage({ user, token }) {
                 backgroundColor: '#eaf3fa'
             }}>
             {loading ? (
-                <div className='d-flex justify-content-center align-items-center' style={{ width: "100%" }}>
+                <div className='d-flex justify-content-center align-items-center' style={{ width: "100%", height: '80vh' }}>
                     <Loader marginT="20%"></Loader>
                 </div>
             ) : (

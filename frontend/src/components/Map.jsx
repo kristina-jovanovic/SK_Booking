@@ -15,7 +15,7 @@ const markerIcon = new L.Icon({
 });
 
 const Map = ({ address }) => {
-    console.log(address);
+    // console.log(address);
     const [coordinates, setCoordinates] = useState([44.7866, 20.4489]); // Default na Beograd
     const [loading, setLoading] = useState(true);
 

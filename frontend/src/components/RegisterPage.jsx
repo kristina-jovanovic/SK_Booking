@@ -48,7 +48,7 @@ function RegisterPage({ token }) {
     return (
         <section className="vh-100">
             <div className="container py-5 h-100">
-                <div className="row d-flex align-items-center justify-content-center h-100">
+                <div className="row d-flex align-items-center justify-content-center h-100 log-ctr">
                     <div className="col-md-8 col-lg-7 col-xl-6">
                         <img src="https://img.freepik.com/free-vector/online-app-tourism-traveler-with-mobile-phone-passport-booking-buying-plane-ticket_74855-10966.jpg?t=st=1720387199~exp=1720390799~hmac=7458b9f295273dca51b7f7fc3082ec1b6838338d878bec4e6faca1a4558b5dc8&w=1380"
                             className="img-fluid" alt="Phone image" />

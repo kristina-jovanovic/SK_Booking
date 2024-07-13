@@ -18,7 +18,7 @@ function HotelCard({ hotel, addHotel, user }) {
 
     }
     return (
-        <div className="card mb-3">
+        <div className="card mb-3" style={{ marginTop: '0.3rem' }}>
             <div className='container' style={{ paddingLeft: 0, paddingRight: 0 }}>
                 <img src={hotel.photo_url} className="card-img-top image" alt="hotel image"
                     style={{
