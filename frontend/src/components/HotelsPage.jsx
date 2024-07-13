@@ -2,30 +2,51 @@ import React, { useEffect, useState } from 'react'
 import HotelCard from './HotelCard'
 import axios from 'axios';
 import Loader from './Loader';
+import useFetch from '../useFetch';
+import PaginationHotels from './PaginationHotels';
 
 function HotelsPage({ addHotel, user }) {
-    const [hotels, setHotels] = useState();
+    // const [hotels, setHotels] = useState();
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        setLoading(true);
-        if (hotels == null) {
-            axios.get("/api/hotels").then((res => {
-                // console.log(res);
-                setHotels(res.data.hotels);
-            }))
+    // useEffect(() => {
+    //     setLoading(true);
+    //     if (hotels == null) {
+    //         axios.get("/api/hotels").then((res => {
+    //             // console.log(res);
+    //             setHotels(res.data.hotels);
+    //         }))
 
+    //     }
+    //     else {
+    //         setLoading(false);
+    //     }
+    // }, [hotels]);
+
+    //NOVO
+    const [hotels, setHotels] = useState(null);
+    const [callFetch, setCallFetch] = useState(true);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [maxPages, setMaxPages] = useState(1);
+    const [data, errors] = useFetch({ urlFetch: "/api/hotels/pagination/5/" + pageNumber, dependencies: [callFetch, pageNumber] });
+
+    useEffect(() => {
+        if (data != null) {
+            setHotels(data.hotels);
+            setMaxPages(data.pages);
         }
         else {
             setLoading(false);
         }
-    }, [hotels]);
+    }, [data, errors]);
+    useEffect(() => {
+        setCallFetch(!callFetch);
+    }, []);
+
+    //NOVO
 
     return (
-        <div //className="bg-image"
+        <div
             style={{
-                // backgroundImage: 'url(https://img.freepik.com/free-vector/world-tourism-day-labels-collection_23-2149052388.jpg?ga=GA1.1.917910491.1706989513&semt=ais_hybrid)',
-                // height: '100vh',
-                //paddingTop:'10vh'
                 backgroundColor: '#eaf3fa'
             }}>
             {loading ? (
@@ -42,13 +63,15 @@ function HotelsPage({ addHotel, user }) {
                         // paddingTop: '30%',
                         flexDirection: 'column'
                     }}>
-                    {/* <HotelCard />
-                <HotelCard /> */}
                     {hotels == null ? <></> : hotels.map((hotel) => (
                         <HotelCard hotel={hotel} key={hotel.id} addHotel={addHotel} user={user} />
                     ))}
+                    <div className='d-flex justify-content-between' style={{ width: "100%", alignItems: 'center', flexFlow: 'column' }}>
 
+                        <PaginationHotels page={pageNumber} setPage={setPageNumber} maxPages={maxPages} />
+                    </div>
                 </div>)}
+
 
         </div>
     )

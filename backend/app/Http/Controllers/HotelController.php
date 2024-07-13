@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class HotelController extends Controller
@@ -22,6 +23,27 @@ class HotelController extends Controller
     {
         $hotels = Hotel::all();
         return new HotelCollection($hotels);
+    }
+
+    public function indexPag(Request $request, $perPage = 5, $page = 1)
+    {
+        // $hotels = DB::table('hotels')->leftjoin('cities', 'hotels.city_id', '=', 'cities.id')->selectRaw('*, cities.Name as city_name, hotels.Name as hotel_name')->paginate($perPage, ['*'], 'page', $page);
+        // $hotels = DB::table('hotels')->paginate($perPage, ['*'], 'page', $page);
+        $hotels = Hotel::query()->paginate($perPage, ['*'], 'page', $page);
+
+        // $hotels = DB::table('hotels')->paginate(5);
+        $data = $hotels->items();
+        $hotels1 = $data;
+
+        for ($i = 0; $i < sizeof($data); $i++) {
+            $hotels1[$i] = new HotelResource($data[$i]);
+        }
+
+        $stranice = $hotels->lastPage();
+        return response()->json(['hotels' => $hotels1, 'pages' => $stranice], 200);
+
+        // $hotels = Hotel::paginate(10); // Paginate by 10 items per page
+        // return view('hotels.index', compact('hotels'));
     }
 
     /**

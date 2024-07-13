@@ -31,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/hotels', [HotelController::class, 'index']);
+Route::get('/hotels/pagination/{perPage?}/{page?}', [HotelController::class, 'indexPag']);
 
 //ovo je samo za ulogovane korisnike
 Route::group(['middleware' => 'auth:sanctum'], function () {
