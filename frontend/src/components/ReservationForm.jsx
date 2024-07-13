@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { format } from 'date-fns';
+import jsPDF from 'jspdf';
 
 function ReservationForm({ user, hotel, token }) {
     let navigate = useNavigate();
@@ -26,6 +27,28 @@ function ReservationForm({ user, hotel, token }) {
         console.log(newResData);
         setReservationData(newResData);
     }
+    function generatePDF(res) {
+        const doc = new jsPDF();
+
+        doc.setFillColor(234, 243, 250);
+        doc.setTextColor('navy');
+        doc.setFont('Times New Roman');
+        doc.setFontSize(15);
+
+        doc.text("Rezervacija broj: " + res.id, 10, 10);
+        doc.text("", 10, 20);
+        doc.text("Hotel: " + res.hotel.name, 10, 25);
+        doc.text("Pansion: " + res.pansion, 10, 30);
+        doc.text("Datum prijave: " + res.date, 10, 35);
+        doc.text("Broj nocenja: " + res.numberOfNights, 10, 40);
+        doc.text("Broj odraslih: " + res.numberOfAdults, 10, 45);
+        doc.text("Broj dece: " + res.numberOfChildren, 10, 50);
+        doc.text("", 10, 55);
+        doc.text("Hvala na poverenju! Vaš SK Booking ", 10, 60);
+
+        doc.save("potvrda-rezervacije.pdf")
+    }
+
     function rezervisi() {
 
         if (reservationData.date === '' || reservationData.pansion === '') {
@@ -62,15 +85,14 @@ function ReservationForm({ user, hotel, token }) {
 
         axios.request(config)
             .then((response) => {
-                // console.log('uspesno sacuvano', response);
-                alert("Rezervacija uspešna!");
+                // console.log('uspesno sacuvano', response.data[1]);
+                // alert("Rezervacija uspešna!");
+                generatePDF(response.data[1]);
             })
             .catch((error) => {
                 // console.log(error);
                 alert(error);
             });
-
-
 
         navigate('/');
     }
