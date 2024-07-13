@@ -46,6 +46,22 @@ class HotelController extends Controller
         // return view('hotels.index', compact('hotels'));
     }
 
+    public function indexSearch(Request $request, $filter)
+    {
+        $hotels = Hotel::where('name', 'like', '%' . $filter . '%')
+            ->orWhere('facilities', 'like', '%' . $filter . '%')
+            ->orWhere('restrictions', 'like', '%' . $filter . '%')
+            ->paginate(5);
+        $data = $hotels->items();
+        $hotels1 = $data;
+
+        for ($i = 0; $i < sizeof($data); $i++) {
+            $hotels1[$i] = new HotelResource($data[$i]);
+        }
+        $stranice = $hotels->lastPage();
+        return response()->json(['hotels' => $hotels1, 'pages' => $stranice], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

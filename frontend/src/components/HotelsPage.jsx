@@ -4,6 +4,8 @@ import axios from 'axios';
 import Loader from './Loader';
 import useFetch from '../useFetch';
 import PaginationHotels from './PaginationHotels';
+import { FaSearch } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 function HotelsPage({ addHotel, user }) {
     // const [hotels, setHotels] = useState();
@@ -23,6 +25,8 @@ function HotelsPage({ addHotel, user }) {
     // }, [hotels]);
 
     //NOVO
+    let navigate = useNavigate();
+
     const [hotels, setHotels] = useState(null);
     const [callFetch, setCallFetch] = useState(true);
     const [pageNumber, setPageNumber] = useState(1);
@@ -44,10 +48,37 @@ function HotelsPage({ addHotel, user }) {
 
     //NOVO
 
+    const [filter, setFilter] = useState({
+        filter: ''
+    });
+    function handleInput(e) {
+        // console.log(e);
+        let newFilter = filter;
+        newFilter[e.target.name] = e.target.value;
+        // console.log(newFilter);
+        setFilter(newFilter);
+
+        e.preventDefault();
+        if (filter.filter === '') {
+            console.log('empty');
+            navigate('/');
+            navigate('/hotels');
+        }
+        else {
+            axios.get("/api/hotels/search/" + filter.filter).then(res => {
+                console.log(res.data);
+                setHotels(res.data.hotels);
+            }).catch((e) => {
+                console.log(e);
+            });
+        }
+    }
+
     return (
         <div
             style={{
-                backgroundColor: '#eaf3fa'
+                backgroundColor: '#eaf3fa',
+                minHeight:'100vh'
             }}>
             {loading ? (
                 <div className='d-flex justify-content-center align-items-center' style={{ width: "100%", height: '80vh' }}>
@@ -63,6 +94,12 @@ function HotelsPage({ addHotel, user }) {
                         // paddingTop: '30%',
                         flexDirection: 'column'
                     }}>
+                    <form className="d-flex" style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+                        <input className="form-control me-2" type="search" placeholder="Pretraži hotele po nazivu, ograničenjima ili sadržajima" aria-label="Search"
+                            onInput={handleInput} name='filter' />
+                        {/* <button className="btn btn-outline-success" type="submit">Search</button> */}
+                        <button type="submit" className="btn btn-outline-info" disabled><FaSearch /></button>
+                    </form>
                     {hotels == null ? <></> : hotels.map((hotel) => (
                         <HotelCard hotel={hotel} key={hotel.id} addHotel={addHotel} user={user} />
                     ))}
