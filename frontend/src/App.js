@@ -37,13 +37,13 @@ function App() {
       </Routes>
       <Routes>
         <Route path='/' element={<NavBar token={token} addToken={addToken} addUser={addUser} user={user} />} >
-          <Route path='hotels' element={<HotelsPage addHotel={addHotel} user={user} />} />
+          <Route path='/hotels' element={<HotelsPage addHotel={addHotel} user={user} />} />
           <Route path='/' element={<Home />} />
-          {/* <Route path='hotels/:id' element={<HotelDetails />} /> ovo ce trebati za unos, update i brisanje hotela */}
+          <Route path='/hotels/:id' element={<HotelDetails hotel={hotel} token={token} />} />
           <Route path='/users/:id/reservations' element={<ReservationPage user={user} token={token} />} />
           <Route path='/reservations' element={<ReservationForm user={user} hotel={hotel} token={token} />} />
           <Route path='/stats' element={<UsersStats user={user} token={token} />} />
-          
+
 
         </Route>
       </Routes>

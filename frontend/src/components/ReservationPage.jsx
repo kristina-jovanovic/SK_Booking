@@ -13,6 +13,7 @@ function ReservationPage({ user, token }) {
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    
     const [reservations, setReservations] = useState();
     useEffect(() => {
         setLoading(true);

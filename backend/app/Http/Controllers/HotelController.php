@@ -89,7 +89,7 @@ class HotelController extends Controller
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'email' => 'required|string|unique:hotels|email',
-            'restrictions' => 'required|string|in:none,adults only,no pets',
+            'restrictions' => 'required|string|in:none,adults only,no pets,no smoking,families only,couples only',
             'facilities' => 'required',
             'description' => 'required|string',
             'photo_url' => 'required|string|url',
@@ -121,6 +121,11 @@ class HotelController extends Controller
      */
     public function show(Hotel $hotel)
     {
+        $role = Auth::user()->role;
+        if ($role === 'user' || $role === 'admin') {
+            return response()->json(['Unauthorized: only owners can see hotel details.'], 401);
+        }
+
         return new HotelResource($hotel);
     }
 
@@ -152,8 +157,9 @@ class HotelController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
-            'email' => 'required|string|unique:hotels|email',
-            'restrictions' => 'required|string|in:none,adults only,no pets',
+            'email' => 'required|string|email',
+            // 'restrictions' => 'required|in:none,adults only,no pets,no smoking,families only,couples only',
+            'restrictions' => 'required',
             'facilities' => 'required',
             'description' => 'required|string',
             'photo_url' => 'required|string|url',

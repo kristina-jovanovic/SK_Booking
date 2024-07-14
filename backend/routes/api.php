@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/profile', function (Request $request) {
         return new UserResource(auth()->user());
     });
-    Route::resource('/hotels', HotelController::class)->only('update', 'destroy', 'store');
+    Route::resource('/hotels', HotelController::class)->only('update', 'destroy', 'store', 'show');
     Route::post('/city', [CityController::class, 'store']);
     Route::resource('users.reservations', ReservationController::class)->only('index');
     Route::resource('/reservations', ReservationController::class)->only('show', 'update', 'store', 'destroy');

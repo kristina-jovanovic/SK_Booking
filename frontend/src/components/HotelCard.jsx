@@ -1,22 +1,34 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Button, Modal } from 'react-bootstrap';
 import { Link, useNavigate, useParams } from 'react-router-dom'
 
 function HotelCard({ hotel, addHotel, user }) {
     let navigate = useNavigate();
-    function reserve() {
-        // navigate(`/hotels/id=${hotel.id}`)
 
+    function reserve() {
         if (user == null) {
             //mora prvo da se prijavi ako nije prijavljen
-            navigate('/login');
+            handleShow();
         }
         else {
             addHotel(hotel);
             navigate('/reservations');
         }
-
+        
     }
+
+    function update() {
+        addHotel(hotel);
+        navigate(`/hotels/${hotel.id}`);
+    }
+
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <div className="card mb-3" style={{ marginTop: '0.3rem' }}>
             <div className='container' style={{ paddingLeft: 0, paddingRight: 0 }}>
@@ -26,7 +38,10 @@ function HotelCard({ hotel, addHotel, user }) {
                         //maxWidth: '200px' 
                     }} />
                 <div className='middle'>
-                    <button type="button" className="btn btn-outline-info" onClick={reserve}>Rezerviši</button>
+                    {user?.role === 'owner' ? (<button type="button" className="btn btn-outline-info" onClick={update}>Izmeni</button>) : (
+                        <button type="button" className="btn btn-outline-info" onClick={reserve}>Rezerviši</button>
+                    )}
+
                 </div>
             </div>
             <div className="card-body">
@@ -52,6 +67,20 @@ function HotelCard({ hotel, addHotel, user }) {
                     <small className="text-muted">{hotel.email}</small>
                 </p>
             </div>
+            <Modal show={show} onHide={handleClose} >
+                <Modal.Header closeButton>
+                    <Modal.Title>Greska</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Morate da se ulogujete da biste rezervisali hotel.</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={() => {
+                        handleClose();
+                        navigate('/login');
+                    }}>
+                        OK
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 
