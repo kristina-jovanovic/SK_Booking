@@ -28,17 +28,25 @@ function HotelsPage({ addHotel, user }) {
     let navigate = useNavigate();
 
     const [hotels, setHotels] = useState(null);
+
     const [callFetch, setCallFetch] = useState(true);
     const [pageNumber, setPageNumber] = useState(1);
     const [maxPages, setMaxPages] = useState(1);
     const [data, errors] = useFetch({ urlFetch: "/api/hotels/pagination/5/" + pageNumber, dependencies: [callFetch, pageNumber] });
+    //search
+    const [filter, setFilter] = useState({
+        filter: ''
+    });
+    // const [callFetchS, setCallFetchS] = useState(false);
+    // const [pageNumberS, setPageNumberS] = useState(1);
+    // const [maxPagesS, setMaxPagesS] = useState(1);
+    // const [dataS, errorsS] = useFetch({ urlFetch: "/api/hotels/search/5/" + pageNumberS + '/' + filter.filter, dependencies: [callFetchS, pageNumberS], callOption: false });
 
     useEffect(() => {
+        setLoading(true);
         if (data != null) {
             setHotels(data.hotels);
             setMaxPages(data.pages);
-        }
-        else {
             setLoading(false);
         }
     }, [data, errors]);
@@ -48,9 +56,6 @@ function HotelsPage({ addHotel, user }) {
 
     //NOVO
 
-    const [filter, setFilter] = useState({
-        filter: ''
-    });
     function handleInput(e) {
         // console.log(e);
         let newFilter = filter;
@@ -60,12 +65,22 @@ function HotelsPage({ addHotel, user }) {
 
         e.preventDefault();
         if (filter.filter === '') {
-            console.log('empty');
+            // console.log('empty');
             navigate('/');
             navigate('/hotels');
         }
         else {
-            axios.get("/api/hotels/search/" + filter.filter).then(res => {
+            // setCallFetchS(true);
+            // setLoading(true);
+            // if (dataS != null) {
+            //     setHotels(dataS.hotels);
+            //     setMaxPagesS(dataS.pages);
+            //     setLoading(false);
+            //     setCallFetchS(false);
+            // }
+
+
+            axios.get("/api/hotels/search/5/1/" + filter.filter).then(res => {
                 console.log(res.data);
                 setHotels(res.data.hotels);
             }).catch((e) => {
@@ -78,7 +93,7 @@ function HotelsPage({ addHotel, user }) {
         <div
             style={{
                 backgroundColor: '#eaf3fa',
-                minHeight:'100vh'
+                minHeight: '100vh'
             }}>
             {loading ? (
                 <div className='d-flex justify-content-center align-items-center' style={{ width: "100%", height: '80vh' }}>

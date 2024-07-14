@@ -35,7 +35,13 @@ function LoginPage({ addToken, token, addUser }) {
                 window.sessionStorage.setItem("auth_token", res.data.access_token);
                 addToken(res.data.access_token);
                 addUser(res.data.user);
-                navigate('/');
+                if (res.data.user.role === 'admin') {
+                    navigate('/stats');
+                }
+                else {
+
+                    navigate('/');
+                }
             }
             else {
                 alert('Pogresni kredencijali');

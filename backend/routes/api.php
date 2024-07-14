@@ -32,7 +32,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/hotels', [HotelController::class, 'index']);
 Route::get('/hotels/pagination/{perPage?}/{page?}', [HotelController::class, 'indexPag']);
-Route::get('/hotels/search/{filter?}', [HotelController::class, 'indexSearch']);
+Route::get('/hotels/search/{perPage?}/{page?}/{filter?}', [HotelController::class, 'indexSearch']);
 
 
 //ovo je samo za ulogovane korisnike
@@ -45,4 +45,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/city', [CityController::class, 'store']);
     Route::resource('users.reservations', ReservationController::class)->only('index');
     Route::resource('/reservations', ReservationController::class)->only('show', 'update', 'store', 'destroy');
+    Route::get('/stats/{perPage?}/{page?}', [UserController::class, 'index']);
 });

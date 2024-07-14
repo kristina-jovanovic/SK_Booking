@@ -46,12 +46,12 @@ class HotelController extends Controller
         // return view('hotels.index', compact('hotels'));
     }
 
-    public function indexSearch(Request $request, $filter)
+    public function indexSearch(Request $request, $perPage = 5, $page = 1, $filter)
     {
         $hotels = Hotel::where('name', 'like', '%' . $filter . '%')
             ->orWhere('facilities', 'like', '%' . $filter . '%')
             ->orWhere('restrictions', 'like', '%' . $filter . '%')
-            ->paginate(5);
+            ->paginate($perPage, ['*'], 'page', $page);
         $data = $hotels->items();
         $hotels1 = $data;
 

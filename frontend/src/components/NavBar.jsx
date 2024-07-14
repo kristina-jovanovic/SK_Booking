@@ -43,9 +43,11 @@ function NavBar({ token, addToken, addUser, user }) {
                     }}
                 >
                     <div className="container-fluid">
-                        <Link className="navbar-brand" to="/">
+                        {user?.role==='admin'?(<Link className="navbar-brand" to="/stats">
                             SK Booking
-                        </Link>
+                        </Link>):(<Link className="navbar-brand" to="/">
+                            SK Booking
+                        </Link>)}
                         <button
                             className="navbar-toggler"
                             type="button"
@@ -62,9 +64,11 @@ function NavBar({ token, addToken, addUser, user }) {
                             id="navbarNavAltMarkup"
                         >
                             <div className="navbar-nav">
-                                <Link className="nav-link active" aria-current="page" to="/hotels">
-                                    Hoteli
-                                </Link>
+                                {user?.role === 'admin' ? (<></>) : (
+                                    <Link className="nav-link active" aria-current="page" to="/hotels">
+                                        Hoteli
+                                    </Link>
+                                )}
                                 {/* {user === null ? (<></>) : (
                                 user.role === 'user' ? (<Link className="nav-link active" aria-current="page" to='/'>Rezervacije</Link>) : (<></>)
                             )} */}

@@ -46,26 +46,14 @@ function PaginationHotels({ page, setPage, maxPages }) {
     }, [maxPages, page]);
 
     return (
-        // <div>
-        //     <ul classNameName="pagination">
-        //         <li classNameName="page-item">
-        //             <p classNameName={`page-link ${prevIsDisabled ? "disabled" : ""}`} style={{ color: "#3459e6", cursor: "pointer" }} onClick={prevPage}>
-        //                 &laquo;
-        //             </p>
-        //         </li>
-        //         <li classNameName="page-item">
-        //             <p classNameName={`page-link ${nextIsDisabled ? "disabled" : ""}`} style={{ color: "#3459e6", cursor: "pointer" }} onClick={nextPage}>
-        //                 &raquo;
-        //             </p>
-        //         </li>
-        //     </ul>
-        // </div>
         <>
             <ul className="pagination">
                 <li className="page-item"><Link className={`page-link ${prevIsDisabled ? "disabled" : ""}`} onClick={prevPage}>Previous</Link></li>
-                <li className="page-item"><Link className={`page-link ${page === 1 ? "active" : ""}`} onClick={() => { changePage(1); }}>1</Link></li>
-                <li className="page-item"><Link className={`page-link ${page === 2 ? "active" : ""}`} onClick={() => { changePage(2); }}>2</Link></li>
-                <li className="page-item"><Link className={`page-link ${page === 3 ? "active" : ""}`} onClick={() => { changePage(3); }}>3</Link></li>
+                {Array.from({ length: maxPages }).map((_, index) => (
+                    <li className="page-item" key={index}><Link className={`page-link ${page === index + 1 ? "active" : ""}`} onClick={() => { changePage(index + 1); }}> {index + 1} </Link></li>
+                ))}
+                {/* <li className="page-item"><Link className={`page-link ${page === 2 ? "active" : ""}`} onClick={() => { changePage(2); }}>2</Link></li>
+                <li className="page-item"><Link className={`page-link ${page === 3 ? "active" : ""}`} onClick={() => { changePage(3); }}>3</Link></li> */}
                 <li className="page-item"><Link className={`page-link ${nextIsDisabled ? "disabled" : ""}`} onClick={nextPage}>Next</Link></li>
             </ul>
         </>

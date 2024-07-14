@@ -8,6 +8,7 @@ const useFetch = ({ urlFetch, dependencies = [], reqData = {}, reqMethod = "get"
     // let requestData = JSON.stringify(reqData);
     useEffect(() => {
         // console.log('lala');
+        // console.log(urlFetch);
         if (callOption === true) {
             let config = {
                 method: reqMethod,

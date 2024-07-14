@@ -10,6 +10,7 @@ import HotelDetails from './components/HotelDetails';
 import Home from './components/Home';
 import ReservationPage from './components/ReservationPage';
 import ReservationForm from './components/ReservationForm';
+import UsersStats from './components/UsersStats';
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
           {/* <Route path='hotels/:id' element={<HotelDetails />} /> ovo ce trebati za unos, update i brisanje hotela */}
           <Route path='/users/:id/reservations' element={<ReservationPage user={user} token={token} />} />
           <Route path='/reservations' element={<ReservationForm user={user} hotel={hotel} token={token} />} />
+          <Route path='/stats' element={<UsersStats user={user} token={token} />} />
           
 
         </Route>

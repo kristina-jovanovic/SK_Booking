@@ -48,6 +48,8 @@ function HotelCard({ hotel, addHotel, user }) {
                 </ul>
                 <p className="card-text">
                     <small className="text-muted">{hotel.address}, {hotel.city.name}, {hotel.city.state}</small>
+                    <br />
+                    <small className="text-muted">{hotel.email}</small>
                 </p>
             </div>
         </div>
