@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Button, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 function RegisterPage({ token }) {
     let navigate = useNavigate();
+    const [message, setMessage] = useState('');
+    const [title, setTitle] = useState('Greska');
 
     useEffect(() => {
         if (token != null) {
@@ -27,24 +30,58 @@ function RegisterPage({ token }) {
         setUserData(newUserData);
     }
 
-
     function handleRegister(e) {
 
         e.preventDefault();
         if (userData.name === '' || userData.email === '' || userData.password === '' || userData.phone_number === '') {
-            alert('Sva polja su obavezna!');
-            return;
+            // alert('Sva polja su obavezna!');
+            // return;
+            setMessage('Sva polja su obavezna!');
+            handleShow();
+            // console.log(show);
         }
-        axios.post("/api/register", userData).then((response) => {
-            console.log(response.data);
+        else if (userData.password.length < 8) {
+            // alert('Lozinka mora imati najmanje 8 karaktera!');
+            // return;
+            setMessage('Lozinka mora imati najmanje 8 karaktera!');
+            handleShow();
+        }
+        else if (/^[0-9]*$/.test(userData.phone_number) != true) {
+            // alert('Broj telefona moze da sadrzi samo cifre!');
+            // return;
+            setMessage('Broj telefona moze da sadrzi samo cifre!');
+            handleShow();
+        }
+        else if (userData.phone_number.length < 9) {
+            // alert('Broj telefona mora da sadrzi najmanje 9 cifara!');
+            // return;
+            setMessage('Broj telefona mora da sadrzi najmanje 9 cifara!');
+            handleShow();
+        }
+        else {
+            axios.post("/api/register", userData).then((response) => {
+                console.log(response.data);
 
-            //kad se registruje, prebaci ga na login stranicu
-            // alert('Registracija uspešna');
-            navigate("/login");
-        }).catch((error) => {
-            console.log(error);
-        });
+                //kad se registruje, prebaci ga na login stranicu
+                // alert('Registracija uspešna');
+                setMessage('Registracija uspesna');
+                setTitle('Potvrda');
+                handleShow();
+                // navigate("/login");
+            }).catch((error) => {
+                console.log(error);
+                // alert('Registracija neuspesna');
+                setMessage(error);
+                handleShow();
+            });
+        }
     }
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <section className="vh-100">
             <div className="container py-5 h-100">
@@ -86,6 +123,22 @@ function RegisterPage({ token }) {
                     </div>
                 </div>
             </div>
+            <Modal show={show} onHide={handleClose} >
+                <Modal.Header closeButton>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{message}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={() => {
+                        handleClose();
+                        if(title==='Potvrda'){
+                            navigate('/login');
+                        }
+                    }}>
+                        OK
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </section>
     )
 }

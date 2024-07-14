@@ -9,7 +9,7 @@ function ReservationPage({ user, token }) {
     let navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);
-    console.log(loading);
+    // console.log(loading);
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap';
 
 function LoginPage({ addToken, token, addUser }) {
     let navigate = useNavigate();
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         if (token != null) {
@@ -26,31 +28,48 @@ function LoginPage({ addToken, token, addUser }) {
     function handleLogin(e) {
         e.preventDefault();
         if (userData.email === '' || userData.password === '') {
-            alert('Sva polja su obavezna!');
-            return;
+            setMessage('Sva polja su obavezna!');
+            // console.log(message);
+            handleShow();
+            // alert('Sva polja su obavezna!');
+            // return;
         }
-        axios.post("/api/login", userData).then(res => {
-            console.log(res.data);
-            if (res.data.success === true) {
-                window.sessionStorage.setItem("auth_token", res.data.access_token);
-                addToken(res.data.access_token);
-                addUser(res.data.user);
-                if (res.data.user.role === 'admin') {
-                    navigate('/stats');
+        else {
+            axios.post("/api/login", userData).then(res => {
+                console.log(res.data);
+                if (res.data.success === true) {
+                    window.sessionStorage.setItem("auth_token", res.data.access_token);
+                    addToken(res.data.access_token);
+                    addUser(res.data.user);
+                    if (res.data.user.role === 'admin') {
+                        navigate('/stats');
+                    }
+                    else {
+
+                        navigate('/');
+                    }
                 }
                 else {
+                    setMessage('Pogresni kredencijali!');
+                    handleShow();
 
-                    navigate('/');
+                    // alert('Pogresni kredencijali');
                 }
-            }
-            else {
-                alert('Pogresni kredencijali');
-            }
-        }).catch((e) => {
-            console.log(e);
-        });
+            }).catch((e) => {
+                console.log(e);
+                setMessage(e.message);
+                handleShow();
+
+            });
+
+        }
 
     }
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     return (
         <section className="vh-100">
@@ -90,6 +109,19 @@ function LoginPage({ addToken, token, addUser }) {
                     </div>
                 </div>
             </div>
+            <Modal show={show} onHide={handleClose} >
+                <Modal.Header closeButton>
+                    <Modal.Title>Greska</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{message}</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="primary" onClick={() => {
+                        handleClose();
+                    }}>
+                        OK
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </section>
     )
 }
