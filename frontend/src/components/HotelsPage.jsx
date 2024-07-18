@@ -8,23 +8,8 @@ import { FaSearch } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
 function HotelsPage({ addHotel, user }) {
-    // const [hotels, setHotels] = useState();
     const [loading, setLoading] = useState(true);
-    // useEffect(() => {
-    //     setLoading(true);
-    //     if (hotels == null) {
-    //         axios.get("/api/hotels").then((res => {
-    //             // console.log(res);
-    //             setHotels(res.data.hotels);
-    //         }))
 
-    //     }
-    //     else {
-    //         setLoading(false);
-    //     }
-    // }, [hotels]);
-
-    //NOVO
     let navigate = useNavigate();
 
     const [hotels, setHotels] = useState(null);
@@ -33,14 +18,11 @@ function HotelsPage({ addHotel, user }) {
     const [pageNumber, setPageNumber] = useState(1);
     const [maxPages, setMaxPages] = useState(1);
     const [data, errors] = useFetch({ urlFetch: "/api/hotels/pagination/5/" + pageNumber, dependencies: [callFetch, pageNumber] });
-    //search
+
     const [filter, setFilter] = useState({
         filter: ''
     });
-    // const [callFetchS, setCallFetchS] = useState(false);
-    // const [pageNumberS, setPageNumberS] = useState(1);
-    // const [maxPagesS, setMaxPagesS] = useState(1);
-    // const [dataS, errorsS] = useFetch({ urlFetch: "/api/hotels/search/5/" + pageNumberS + '/' + filter.filter, dependencies: [callFetchS, pageNumberS], callOption: false });
+
 
     useEffect(() => {
         setLoading(true);
@@ -54,35 +36,26 @@ function HotelsPage({ addHotel, user }) {
         setCallFetch(!callFetch);
     }, []);
 
-    //NOVO
+    const [pageNumberS, setPageNumberS] = useState(1);
+    const [maxPagesS, setMaxPagesS] = useState(1);
 
     function handleInput(e) {
-        // console.log(e);
         let newFilter = filter;
         newFilter[e.target.name] = e.target.value;
-        // console.log(newFilter);
         setFilter(newFilter);
 
         e.preventDefault();
         if (filter.filter === '') {
-            // console.log('empty');
             navigate('/');
             navigate('/hotels');
+            setMaxPagesS(1);
+            setHotels(data.hotels);
         }
         else {
-            // setCallFetchS(true);
-            // setLoading(true);
-            // if (dataS != null) {
-            //     setHotels(dataS.hotels);
-            //     setMaxPagesS(dataS.pages);
-            //     setLoading(false);
-            //     setCallFetchS(false);
-            // }
-
-
-            axios.get("/api/hotels/search/5/1/" + filter.filter).then(res => {
+            axios.get("/api/hotels/search/5/" + pageNumberS + '/' + filter.filter).then(res => {
                 console.log(res.data);
                 setHotels(res.data.hotels);
+                setMaxPagesS(res.data.pages);
             }).catch((e) => {
                 console.log(e);
             });
@@ -118,10 +91,17 @@ function HotelsPage({ addHotel, user }) {
                     {hotels == null ? <></> : hotels.map((hotel) => (
                         <HotelCard hotel={hotel} key={hotel.id} addHotel={addHotel} user={user} />
                     ))}
-                    <div className='d-flex justify-content-between' style={{ width: "100%", alignItems: 'center', flexFlow: 'column' }}>
+                    {(filter == null || filter.filter === '') ? (
+                        <div className='d-flex justify-content-between' style={{ width: "100%", alignItems: 'center', flexFlow: 'column' }}>
 
-                        <PaginationHotels page={pageNumber} setPage={setPageNumber} maxPages={maxPages} />
-                    </div>
+                            <PaginationHotels page={pageNumber} setPage={setPageNumber} maxPages={maxPages} />
+                        </div>) : (
+                        <div className='d-flex justify-content-between' style={{ width: "100%", alignItems: 'center', flexFlow: 'column' }}>
+
+                            <PaginationHotels page={pageNumberS} setPage={setPageNumberS} maxPages={maxPagesS} />
+                        </div>
+                    )}
+
                 </div>)}
 
 

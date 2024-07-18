@@ -97,11 +97,18 @@ function ReservationForm({ user, hotel, token }) {
         navigate('/');
     }
     return (
-        <section className="intro" style={{ height: '100vh', backgroundColor: '#eaf3fa' }}>
+        <section className="intro" style={{
+            minHeight: '100vh', backgroundColor: '#eaf3fa',
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
             <div className="bg-image h-100">
                 <div className="mask d-flex align-items-center h-100" style={{ backgroundColor: "#f3f2f2;" }}>
                     <div className="container">
-                        <div className="row d-flex justify-content-center align-items-center">
+                        <div className="row d-flex justify-content-center align-items-center" style={{ paddingTop: '1rem', paddingBottom: '1rem' }}>
                             <div className="col-12 col-lg-9 col-xl-8" style={{ width: '80%' }}>
                                 <div className="card" style={{ borderRadius: "1rem;" }}>
                                     <div className="row g-0">
